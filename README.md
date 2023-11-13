@@ -3,17 +3,17 @@
 Simple validation framework with annotation support.
 
 ## Rules
-A `Rule` is responsible for applying validation logic on a given input. Rules can be defined and reused by different validators.
+A `Rule` is responsible for applying a validation rule on a given input. Rules can be defined and reused by different validators.
 
 **Example**
 ```java
-Rule<String> notNullRule = input -> RuleResult.from(input != null, "Input must not be null");
-Rule<String> fooRule = input -> RuleResult.from(input.startsWith("foo", "Input must start with 'foo'");
-Rule<String> barRule = input -> RuleResult.from(input.endsWith("bar"), "Input must end with 'bar'");
+Rule<String> notNullRule = input -> input != null ? new RuleResult.Ok() : new RuleResult.Error("Input must not be null");
+Rule<String> fooRule = input -> input.startsWith("foo") ? new RuleResult.Ok() : new RuleResult.Error("Input must start with 'foo'");
+Rule<String> barRule = input -> input.endsWith("bar")? new RuleResult.Ok() : new RuleResult.Error("Input must end with 'bar'");
 ```
 
 ## Validators
-A `Validator` performs necessary data manipulation and applies a rule or a set of rules on the given input.
+A `Validator` performs necessary preparation of the input and applies one or more rules on the input.
 
 **Example**
 ```java
@@ -22,7 +22,7 @@ public class FooBarValidator implements Validator<String> {
 
     @Override
     public List<RuleResult> validate(String input) {
-        return ruleSet.stream().map(rule -> rule.apply(name)).collect(Collectors.toList());
+        return ruleSet.stream().map(rule -> rule.apply(input)).collect(Collectors.toList());
     }
 }
 ```
@@ -46,7 +46,5 @@ Class validation is executed by using the `ValidationProcessor` class.
 
 **Example**
 ```java
-public class Foobar {
-  new ValidationProcessor().process(new Foobar("Foo-123-Bar"));
-}
+new ValidationProcessor().process(new Foobar("foo-123-bar"));
 ```
