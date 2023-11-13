@@ -7,7 +7,6 @@ A `Rule` is responsible for applying a validation rule on a given input. Rules c
 
 **Example**
 ```java
-Rule<String> notNullRule = input -> input != null ? new RuleResult.Ok() : new RuleResult.Error("Input must not be null");
 Rule<String> fooRule = input -> input.startsWith("foo") ? new RuleResult.Ok() : new RuleResult.Error("Input must start with 'foo'");
 Rule<String> barRule = input -> input.endsWith("bar")? new RuleResult.Ok() : new RuleResult.Error("Input must end with 'bar'");
 ```
@@ -18,7 +17,7 @@ A `Validator` performs necessary preparation of the input and applies one or mor
 **Example**
 ```java
 public class FooBarValidator implements Validator<String> {
-    private final Set<Rule<String>> ruleSet = Set.of(notNullRule, fooRule, barRule);
+    private final Set<Rule<String>> ruleSet = Set.of(fooRule, barRule);
 
     @Override
     public List<RuleResult> validate(String input) {
