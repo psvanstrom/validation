@@ -15,17 +15,17 @@ public class PersonalNumberValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"19400112-4587", "400112-4587", "19230102+2220", "230102+2220", "194001124587", "4001124587"})
     void validPersonalNumberShouldPass(String pnr) {
-        assertTrue(validator.validate(pnr).stream().allMatch(RuleResult::isValid));
+        assertTrue(validator.validate(pnr).stream().allMatch(r -> r instanceof RuleResult.Ok));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"19400112-4287", "2232342342342342342", "24001124585"})
     void invalidPersonalNumberShouldFail(String pnr) {
-        assertFalse(validator.validate(pnr).stream().allMatch(RuleResult::isValid));
+        assertFalse(validator.validate(pnr).stream().allMatch(r -> r instanceof RuleResult.Ok));
     }
     
     @Test
     void nullPersonalNumberShouldFail() {
-        assertFalse(validator.validate(null).stream().allMatch(RuleResult::isValid));
+        assertFalse(validator.validate(null).stream().allMatch(r -> r instanceof RuleResult.Ok));
     }
 }

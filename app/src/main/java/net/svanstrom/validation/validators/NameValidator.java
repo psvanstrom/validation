@@ -1,7 +1,7 @@
 package net.svanstrom.validation.validators;
 
-import net.svanstrom.validation.rules.Rule;
 import net.svanstrom.validation.rules.RuleResult;
+import net.svanstrom.validation.rules.Rule;
 
 import java.util.List;
 import java.util.Set;

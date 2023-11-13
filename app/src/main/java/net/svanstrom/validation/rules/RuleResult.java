@@ -1,23 +1,23 @@
 package net.svanstrom.validation.rules;
 
-public class RuleResult {
-    private final boolean valid;
+public sealed class RuleResult permits RuleResult.Ok, RuleResult.Error {
     private final String errorMessage;
+    public RuleResult() {
+        errorMessage = null;
+    }
     
-    private RuleResult(final boolean valid, final String errorMessage) {
-        this.valid = valid;
+    private RuleResult(final String errorMessage) {
         this.errorMessage = errorMessage;
-    }
-    
-    public static RuleResult from(final boolean valid, final String errorMessage) {
-        return new RuleResult(valid, errorMessage);
-    }
-
-    public boolean isValid() {
-        return valid;
     }
     
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    static final public class Ok extends RuleResult {}
+    static final public class Error extends RuleResult {
+        public Error(final String errorMessage) {
+            super(errorMessage);
+        }
     }
 }

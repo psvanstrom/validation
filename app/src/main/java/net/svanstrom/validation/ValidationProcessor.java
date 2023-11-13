@@ -4,11 +4,13 @@ import net.svanstrom.validation.annotations.Validate;
 import net.svanstrom.validation.rules.RuleResult;
 import net.svanstrom.validation.validators.Validator;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ValidationProcessor {
 
@@ -65,6 +67,6 @@ public class ValidationProcessor {
             );
         }
         List<RuleResult> results = validatorToUse.validate(value);
-        return results.stream().filter(r -> !r.isValid()).map(r -> new ValidationError(r.getErrorMessage(), name)).collect(Collectors.toList());
+        return results.stream().filter(r -> r instanceof RuleResult.Error).map(r -> new ValidationError(r.getErrorMessage(), name)).collect(Collectors.toList());
     }
 }

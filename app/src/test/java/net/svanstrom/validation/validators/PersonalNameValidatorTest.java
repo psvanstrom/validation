@@ -14,12 +14,12 @@ public class PersonalNameValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {"John Doe", "Å Ö", "Åsa Älva Österberg"})
     void validNameShouldPass(String name) {
-        assertTrue(validator.validate(name).stream().allMatch(RuleResult::isValid));
+        assertTrue(validator.validate(name).stream().allMatch(r -> r instanceof RuleResult.Ok));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"Ása Ælva Østerberg", "       ", "John 3 Smith"})
     void invalidNameShouldFail(String name) {
-        assertFalse(validator.validate(name).stream().allMatch(RuleResult::isValid));
+        assertFalse(validator.validate(name).stream().allMatch(r -> r instanceof RuleResult.Ok));
     }
 }
