@@ -1,6 +1,7 @@
 # validation
 
-Simple validation framework with annotation support.
+Simple validation framework with annotation support. Example code available [here](app/src/main/java/net/svanstrom/validation/example).
+
 
 ## Rules
 A `Rule` is responsible for applying a validation rule on a given input. Rules can be defined and reused by different validators.
