@@ -1,7 +1,7 @@
 package net.svanstrom.validation.rules;
 
 public class CommonRules {
-    public static Rule<String> notBlank =
+    public static final Rule<String> notBlank =
             input -> RuleResult.from(input != null && !input.trim().isEmpty(), "Input cannot be blank.");
     public static final Rule<String> onlyDigits =
             input -> RuleResult.from(input.matches("\\d+"), "Input must be digits only.");

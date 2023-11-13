@@ -4,12 +4,12 @@ public class RuleResult {
     private final boolean valid;
     private final String errorMessage;
     
-    private RuleResult(boolean valid, String errorMessage) {
+    private RuleResult(final boolean valid, final String errorMessage) {
         this.valid = valid;
         this.errorMessage = errorMessage;
     }
     
-    public static RuleResult from(boolean valid, String errorMessage) {
+    public static RuleResult from(final boolean valid, final String errorMessage) {
         return new RuleResult(valid, errorMessage);
     }
 

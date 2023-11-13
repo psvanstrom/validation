@@ -25,9 +25,7 @@ public class ValidationProcessorTest {
     
     @Test
     public void wrongTypeShouldThrowException() {
-        assertThrows(IllegalArgumentException.class, () -> {
-           processor.process(new WrongValidatorAnnotatedClass(3333)); 
-        });
+        assertThrows(IllegalArgumentException.class, () -> processor.process(new WrongValidatorAnnotatedClass(3333)));
     }
 }
 

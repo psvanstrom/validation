@@ -14,7 +14,7 @@ public class NameValidator implements Validator<String> {
     private final Set<Rule<String>> ruleSet = Set.of(notBlank, onlySwedishAlphabetical);
 
     @Override
-    public List<RuleResult> validate(String name) {
+    public List<RuleResult> validate(final String name) {
         return ruleSet.stream().map(rule -> rule.apply(name)).collect(Collectors.toList());
     }
 }

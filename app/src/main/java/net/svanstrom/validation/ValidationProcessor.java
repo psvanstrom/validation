@@ -8,6 +8,7 @@ import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ValidationProcessor {
 
@@ -16,7 +17,13 @@ public class ValidationProcessor {
 
     public List<ValidationError> process(Object object) throws Exception {
         List<ValidationError> errors = new ArrayList<>();
+        errors.addAll(processFields(object));
+        errors.addAll(processMethods(object));
+        return errors;
+    }
 
+    private List<ValidationError> processFields(Object object) throws Exception {
+        List<ValidationError> errors = new ArrayList<>();
         Class<?> clazz = object.getClass();
         for (Field field : clazz.getDeclaredFields()) {
             field.setAccessible(true);
@@ -26,6 +33,12 @@ public class ValidationProcessor {
                 errors.addAll(runValidation(field.getGenericType(), field.getName(), validatorClass, value));
             }
         }
+        return errors;
+    }
+
+    private List<ValidationError> processMethods(Object object) throws Exception {
+        List<ValidationError> errors = new ArrayList<>();
+        Class<?> clazz = object.getClass();
         for (Method method : clazz.getDeclaredMethods()) {
             method.setAccessible(true);
             if (method.isAnnotationPresent(Validate.class)) {
@@ -34,7 +47,6 @@ public class ValidationProcessor {
                 errors.addAll(runValidation(method.getReturnType(), method.getName(), validatorClass, value));
             }
         }
-
         return errors;
     }
 
