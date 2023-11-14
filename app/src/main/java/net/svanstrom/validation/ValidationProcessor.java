@@ -67,6 +67,9 @@ public class ValidationProcessor {
             );
         }
         List<RuleResult> results = validatorToUse.validate(value);
-        return results.stream().filter(r -> r instanceof RuleResult.Error).map(r -> new ValidationError(r.getErrorMessage(), name)).collect(Collectors.toList());
+        return results.stream()
+                .filter(r -> r instanceof RuleResult.Error)
+                .map(r -> new ValidationError(((RuleResult.Error) r).errorMessage(), name))
+                .collect(Collectors.toList());
     }
 }
